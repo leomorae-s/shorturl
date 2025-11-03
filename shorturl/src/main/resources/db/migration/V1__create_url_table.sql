@@ -1,0 +1,4 @@
+CREATE TABLE url (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    original_url VARCHAR(2048) NOT NULL
+);
