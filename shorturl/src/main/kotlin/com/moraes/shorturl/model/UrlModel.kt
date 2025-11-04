@@ -1,5 +1,6 @@
 package com.moraes.shorturl.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -12,6 +13,7 @@ import jakarta.persistence.Table
 data class UrlModel(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private var id: Long? = null,
     @Column
-    public val originalUrl: String)
+    val originalUrl: String)

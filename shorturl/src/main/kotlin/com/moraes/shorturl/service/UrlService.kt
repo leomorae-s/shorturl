@@ -2,13 +2,16 @@ package com.moraes.shorturl.service
 
 import com.moraes.shorturl.model.UrlModel
 import com.moraes.shorturl.repository.UrlRepository
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import java.util.Optional
+import org.springframework.web.server.ResponseStatusException
+
 
 @Service
 class UrlService(private val urlRepository: UrlRepository) {
 
-    public fun shortener(url: String) {
+    fun shortener(url: String) {
 
         val incomingUrl = UrlModel(originalUrl = url)
 
@@ -16,11 +19,12 @@ class UrlService(private val urlRepository: UrlRepository) {
     }
 
 
-    public fun redirectUrl(id: Long): String {
+    fun redirectUrl(id: Long): UrlModel {
 
-        val model: Optional<UrlModel> = urlRepository.findById(id)
+        val model: UrlModel? = urlRepository.findByIdOrNull(id)
 
-        return model.get().originalUrl
 
+
+        return model ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Url de id $id não encontrada")
     }
 }
